@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gtpl/query/global_handler.dart';
-
 import '../view/error_page.dart';
 
 Future<GetBroadbandDetailsModel?> getBroadbandUserDetails(

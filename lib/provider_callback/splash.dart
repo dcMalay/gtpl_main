@@ -1,6 +1,5 @@
 import 'package:gtpl/query/global_handler.dart';
 import 'package:gtpl/view/home.dart';
-import 'package:gtpl/view/login/login.dart';
 import 'package:gtpl/welcome.dart';
 
 class CallBackSplash {

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 
 import '../query/broadband/get_plan_list.dart';

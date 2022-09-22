@@ -11,7 +11,6 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-
 import '../../../const/const.dart';
 
 class QuickBroadband extends StatefulWidget {
@@ -164,8 +163,10 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text("Enter Your Phone Number",
-                            style: TextStyle(color: greyColor)),
+                        Text(
+                          "Enter Your Phone Number",
+                          style: TextStyle(color: greyColor),
+                        ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -219,8 +220,9 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                           name.clear();
 
                           getBroadbandUserDetails(
-                                  context, userIdController.text)
-                              .then((value) {
+                            context,
+                            userIdController.text,
+                          ).then((value) {
                             context.loaderOverlay.hide();
 
                             setState(() {
@@ -249,7 +251,9 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
                           decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -278,7 +282,8 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                                       return AlertDialog(
                                         title: const Text("Are you sure?"),
                                         content: const Text(
-                                            "You want to change your plan Login to Continue"),
+                                          "You want to change your plan Login to Continue",
+                                        ),
                                         actions: [
                                           TextButton(
                                             child: Text("Cancel"),
@@ -290,9 +295,9 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                                             child: Text("Go"),
                                             onPressed: () {
                                               Provider.of<LoginProvider>(
-                                                      context,
-                                                      listen: false)
-                                                  .onChanged("Broadband");
+                                                context,
+                                                listen: false,
+                                              ).onChanged("Broadband");
 
                                               GlobalHandler
                                                   .navigatorPushReplacement(

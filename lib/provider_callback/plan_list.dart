@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gtpl/provider/plan_list.dart';
-import 'package:gtpl/query/global_handler.dart';
-import 'package:gtpl/view/home.dart';
-import 'package:gtpl/view/login/login.dart';
 import 'package:provider/provider.dart';
 
 class PlanListCallback {
