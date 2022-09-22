@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/view/help/components/past_ticket.dart';
-
-import 'package:gtpl/view/home/components/ticket.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 enum WidgetMarker {
