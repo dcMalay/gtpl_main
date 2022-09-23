@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gtpl/api_layer/networking.dart';
-import 'package:gtpl/api_layer/ticket_model.dart';
+import 'package:gtpl/api_layer/models/ticket_model.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,11 +19,10 @@ class _PastTicketsState extends State<PastTickets> {
   var user_id;
   void getBroadbandNo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString("customer_no");
+    var token = prefs.getString("user_id");
     setState(() {
       user_id = token;
     });
-    print("userId: ${token}");
   }
 
   @override

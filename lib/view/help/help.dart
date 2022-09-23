@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/view/help/components/past_ticket.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 enum WidgetMarker {
@@ -26,7 +28,6 @@ class Item {
   });
 }
 
-// ignore: must_be_immutable
 class Help extends StatefulWidget {
   Help({Key? key}) : super(key: key);
 
@@ -71,6 +72,30 @@ class _HelpState extends State<Help> {
       .animateToPage(index); // function to move the items on clicking the dots
 
   TextEditingController getTicketNumber = TextEditingController();
+  TextEditingController getSubscriberNo = TextEditingController();
+  TextEditingController getStbNo = TextEditingController();
+  TextEditingController getIssueDesc = TextEditingController();
+
+//function to get the current userID from sharedprefarance
+  var user_id = "user_12345";
+  var operator_id = 'op_1234';
+
+  void getBroadband() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("user_id");
+    setState(() {
+      user_id = token!;
+    });
+  }
+
+  @override
+  void initState() {
+    getBroadband();
+
+    getOperator(user_id);
+    // getoperator=getOperator(user_id);
+    super.initState();
+  }
 
 //the widget to show indecator dots
   Widget buildIndicator() => AnimatedSmoothIndicator(
@@ -119,31 +144,6 @@ class _HelpState extends State<Help> {
                 SizedBox(
                   height: 15,
                 ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 50),
-                //   padding: EdgeInsets.all(12),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(12),
-                //     color: whiteColor,
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         'Tell us your issue',
-                //         style: TextStyle(
-                //           fontSize: 18,
-                //           fontWeight: FontWeight.w500,
-                //           color: greyColor,
-                //         ),
-                //       ),
-                //       Icon(
-                //         Icons.send,
-                //         color: primaryColor,
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
             height: 200,
@@ -243,7 +243,7 @@ class _HelpState extends State<Help> {
                   child: CarouselSlider(
                       carouselController: controller,
                       options: CarouselOptions(
-                        autoPlay: false,
+                        autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 3),
                         autoPlayAnimationDuration:
                             const Duration(milliseconds: 800),
@@ -260,16 +260,6 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.cableQuestions;
                             });
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) {
-                            //       return QuestionsView(
-                            //         category: 'Cables',
-                            //       );
-                            //     },
-                            //   ),
-                            // );
                           },
                           child: Column(
                             children: [
@@ -296,16 +286,6 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.equipmentQuestions;
                             });
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) {
-                            //       return QuestionsView(
-                            //         category: 'Equipments',
-                            //       );
-                            //     },
-                            //   ),
-                            // );
                           },
                           child: Padding(
                             padding:
@@ -336,12 +316,6 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.digitalQuestions;
                             });
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return QuestionsView(
-                            //     category: 'Digital',
-                            //   );
-                            // }));
                           },
                           child: Padding(
                             padding:
@@ -371,12 +345,6 @@ class _HelpState extends State<Help> {
                             setState(() {
                               selectedWidgetMarker = WidgetMarker.hdtvQuestions;
                             });
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return QuestionsView(
-                            //     category: 'HDTV',
-                            //   );
-                            // }));
                           },
                           child: Padding(
                             padding:
@@ -407,12 +375,6 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.parentalcontrolQuestions;
                             });
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return QuestionsView(
-                            //     category: 'Parental Control',
-                            //   );
-                            // }));
                           },
                           child: Padding(
                             padding:
@@ -444,12 +406,6 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.smartfeaturesQuestions;
                             });
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return QuestionsView(
-                            //     category: 'Smart Featured',
-                            //   );
-                            // }));
                           },
                           child: Padding(
                             padding:
@@ -634,7 +590,7 @@ class _HelpState extends State<Help> {
                       borderRadius: BorderRadius.circular(5)),
                   child: Center(
                     child: Text(
-                      'Subscriber Id: 252621',
+                      'Subscriber Id: ${user_id}',
                       style: TextStyle(
                         fontSize: 16,
                         color: primaryColor,
@@ -716,6 +672,7 @@ class _HelpState extends State<Help> {
               ),
               SizedBox(height: 30),
               TextField(
+                controller: getSubscriberNo,
                 decoration: InputDecoration(
                   enabled: true,
                   hintText: 'Subscriber No.',
@@ -727,6 +684,7 @@ class _HelpState extends State<Help> {
               ),
               SizedBox(height: 30),
               TextField(
+                controller: getStbNo,
                 decoration: InputDecoration(
                   hintText: 'STB No.',
                   hintStyle: TextStyle(
@@ -761,47 +719,10 @@ class _HelpState extends State<Help> {
                     });
                   },
                 ),
-                // child: DropdownButton(
-                //   value: _dropdownValue,
-                //   hint: Text('Choose your Issue'),
-                //   isExpanded: true,
-                //   items: [
-                //     DropdownMenuItem(
-                //       child: Text('Cables'),
-                //       value: 'Cables',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('Equipments'),
-                //       value: 'Equipments',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('Digital'),
-                //       value: 'Digital',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('HDTV'),
-                //       value: 'HDTV',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('Parental Control'),
-                //       value: 'Parental Control',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('Smart Featured'),
-                //       value: 'Smart Featured',
-                //     ),
-                //     DropdownMenuItem(
-                //       child: Text('Others'),
-                //       value: 'Others',
-                //     ),
-                //   ],
-                //   onChanged: (value) => setState(() {
-                //     _dropdownValue = value;
-                //   }),
-                // ),
               ),
               SizedBox(height: 20),
               TextField(
+                controller: getIssueDesc,
                 maxLength: 250,
                 decoration: InputDecoration(
                   hintText: 'Tell Us the reason (250 words)',
@@ -817,7 +738,29 @@ class _HelpState extends State<Help> {
         Center(
           child: CupertinoButton(
             color: primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              String desc = getIssueDesc.text;
+              String issue_type = _dropdownValue;
+              print('User_id:');
+              print('Description:${desc}');
+              print('Issue_type:${issue_type}');
+              print('Operator_id:op_1234');
+              // postTicket('user_12345', 'description for ticket posting',
+              //     'smart featured', 'op_1234');
+
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  content: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Center(
+                      child: Text('You Raised a ticket'),
+                    ),
+                  ),
+                ),
+              );
+            },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
               child: Text(
@@ -928,12 +871,11 @@ class _HelpState extends State<Help> {
           child: CupertinoButton(
             color: primaryColor,
             onPressed: () {
-              setState(() {
-                selectedWidgetMarker = WidgetMarker.raiseTicket;
-              });
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return RaiseTicketView();
-              // }));
+              setState(
+                () {
+                  selectedWidgetMarker = WidgetMarker.raiseTicket;
+                },
+              );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),

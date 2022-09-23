@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final broadBandUser = broadBandUserFromJson(jsonString);
+//     final getOperator = getOperatorFromJson(jsonString);
 
 import 'dart:convert';
 
-BroadBandUser broadBandUserFromJson(String str) =>
-    BroadBandUser.fromJson(json.decode(str));
+GetOperator getOperatorFromJson(String str) =>
+    GetOperator.fromJson(json.decode(str));
 
-String broadBandUserToJson(BroadBandUser data) => json.encode(data.toJson());
+String getOperatorToJson(GetOperator data) => json.encode(data.toJson());
 
-class BroadBandUser {
-  BroadBandUser({
+class GetOperator {
+  GetOperator({
     required this.status,
     required this.resultUserDetail,
     required this.getSubscriberDetail,
@@ -20,7 +20,7 @@ class BroadBandUser {
   ResultUserDetail resultUserDetail;
   GetSubscriberDetail getSubscriberDetail;
 
-  factory BroadBandUser.fromJson(Map<String, dynamic> json) => BroadBandUser(
+  factory GetOperator.fromJson(Map<String, dynamic> json) => GetOperator(
         status: json["status"],
         resultUserDetail: ResultUserDetail.fromJson(json["result_user_detail"]),
         getSubscriberDetail:
@@ -40,75 +40,55 @@ class GetSubscriberDetail {
     required this.dueDate,
     required this.returnCode,
     required this.returnMessage,
+    required this.subscriberName,
+    required this.subscriberCode,
+    required this.amount,
     required this.billDate,
     required this.state,
     required this.stateCode,
   });
 
-  GetSubscriberDetailClass empty;
-  Date dueDate;
+  Empty empty;
+  DateTime dueDate;
   String returnCode;
   String returnMessage;
-  Date billDate;
+  String subscriberName;
+  String subscriberCode;
+  String amount;
+  DateTime billDate;
   String state;
   String stateCode;
 
   factory GetSubscriberDetail.fromJson(Map<String, dynamic> json) =>
       GetSubscriberDetail(
-        empty: GetSubscriberDetailClass.fromJson(json["\u0024"]),
-        dueDate: Date.fromJson(json["DueDate"]),
+        empty: Empty.fromJson(json["\u0024"]),
+        dueDate: DateTime.parse(json["DueDate"]),
         returnCode: json["returnCode"],
         returnMessage: json["returnMessage"],
-        billDate: Date.fromJson(json["BillDate"]),
+        subscriberName: json["SubscriberName"],
+        subscriberCode: json["SubscriberCode"],
+        amount: json["Amount"],
+        billDate: DateTime.parse(json["BillDate"]),
         state: json["State"],
         stateCode: json["StateCode"],
       );
 
   Map<String, dynamic> toJson() => {
         "\u0024": empty.toJson(),
-        "DueDate": dueDate.toJson(),
+        "DueDate": dueDate.toIso8601String(),
         "returnCode": returnCode,
         "returnMessage": returnMessage,
-        "BillDate": billDate.toJson(),
+        "SubscriberName": subscriberName,
+        "SubscriberCode": subscriberCode,
+        "Amount": amount,
+        "BillDate": billDate.toIso8601String(),
         "State": state,
         "StateCode": stateCode,
       };
 }
 
-class Date {
-  Date({
-    required this.empty,
-  });
-
-  BillDate empty;
-
-  factory Date.fromJson(Map<String, dynamic> json) => Date(
-        empty: BillDate.fromJson(json["\u0024"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "\u0024": empty.toJson(),
-      };
-}
-
-class BillDate {
-  BillDate({
-    required this.xsiNil,
-  });
-
-  String xsiNil;
-
-  factory BillDate.fromJson(Map<String, dynamic> json) => BillDate(
-        xsiNil: json["xsi:nil"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "xsi:nil": xsiNil,
-      };
-}
-
-class GetSubscriberDetailClass {
-  GetSubscriberDetailClass({
+class Empty {
+  Empty({
     required this.xmlnsXsd,
     required this.xmlnsXsi,
     required this.xmlns,
@@ -118,8 +98,7 @@ class GetSubscriberDetailClass {
   String xmlnsXsi;
   String xmlns;
 
-  factory GetSubscriberDetailClass.fromJson(Map<String, dynamic> json) =>
-      GetSubscriberDetailClass(
+  factory Empty.fromJson(Map<String, dynamic> json) => Empty(
         xmlnsXsd: json["xmlns:xsd"],
         xmlnsXsi: json["xmlns:xsi"],
         xmlns: json["xmlns"],
