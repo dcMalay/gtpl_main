@@ -70,6 +70,8 @@ class _HelpState extends State<Help> {
   void animateToSlide(int index) => controller
       .animateToPage(index); // function to move the items on clicking the dots
 
+  TextEditingController getTicketNumber = TextEditingController();
+
 //the widget to show indecator dots
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
@@ -594,26 +596,11 @@ class _HelpState extends State<Help> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                // margin: EdgeInsets.symmetric(horizontal: 30),
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  border: Border.all(color: greyColor.withOpacity(0.5)),
-                  borderRadius: BorderRadius.circular(12),
-                  color: whiteColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Enter ticket number',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: greyColor,
-                      ),
-                    ),
-                  ],
+              TextField(
+                controller: getTicketNumber,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Enter Ticket Number",
                 ),
               ),
               SizedBox(
@@ -858,21 +845,7 @@ class _HelpState extends State<Help> {
             ),
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.all(20.0),
-        //   child: ListView.builder(
-        //     padding: EdgeInsets.all(2),
-        //     shrinkWrap: true,
-        //     physics: ClampingScrollPhysics(),
-        //     itemCount: 6,
-        //     itemBuilder: (context, index) {
-        //       return Padding(
-        //         padding: const EdgeInsets.only(bottom: 10),
-        //         child: Ticket(),
-        //       );
-        //     },
-        //   ),
-        // )
+        PastTickets()
       ],
     );
   }

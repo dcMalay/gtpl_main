@@ -77,7 +77,6 @@ class GlobalHandler {
       body: body,
       headers: headers,
     );
-
     return response;
   }
 
