@@ -698,11 +698,6 @@ class _HelpState extends State<Help> {
                 padding: EdgeInsets.all(5),
                 width: 400,
                 height: 60,
-                // decoration: BoxDecoration(
-                //     border: Border.all(
-                //       color: greyColor,
-                //     ),
-                //     borderRadius: BorderRadius.circular(5)),
                 child: DropdownButton<String>(
                   enableFeedback: true,
                   hint: Text('Choose your Issue'),
@@ -715,7 +710,7 @@ class _HelpState extends State<Help> {
                   onChanged: (String? d) {
                     setState(() {
                       _dropdownValue = d!;
-                      print(_dropdownValue);
+                      // print(_dropdownValue);
                     });
                   },
                 ),
@@ -738,16 +733,21 @@ class _HelpState extends State<Help> {
         Center(
           child: CupertinoButton(
             color: primaryColor,
-            onPressed: () {
+            onPressed: () async {
               String desc = getIssueDesc.text;
-              String issue_type = _dropdownValue;
+              print(desc);
+              // String issue_type = _dropdownValue;
+              // print(issue_type);
               print('User_id:');
               print('Description:${desc}');
-              print('Issue_type:${issue_type}');
+              // print('Issue_type:${issue_type}');
               print('Operator_id:op_1234');
-              // postTicket('user_12345', 'description for ticket posting',
-              //     'smart featured', 'op_1234');
-
+              try {
+                await postTicket(
+                    'user_12345', desc, 'smart featured', 'op_1234');
+              } catch (e) {
+                print(e);
+              }
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(

@@ -36,13 +36,14 @@ class _PastTicketsState extends State<PastTickets> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 900,
       child: FutureBuilder<List<UserTicket>>(
         future: futureData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<UserTicket>? data = snapshot.data;
             return ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: data!.length,
               itemBuilder: (context, index) {
                 var str = data[index].createdAt.toString();
@@ -195,7 +196,7 @@ class _PastTicketsState extends State<PastTickets> {
                                             children: [
                                               Text(
                                                 data[index].id,
-                                                style: TextStyle(fontSize: 18),
+                                                style: TextStyle(fontSize: 17),
                                               ),
                                               SizedBox(
                                                 width: 6,
@@ -292,7 +293,8 @@ class _PastTicketsState extends State<PastTickets> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+                                            data[index].description,
+                                            // 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
                                             softWrap: true,
                                             maxLines: 3,
                                             style: TextStyle(
@@ -318,7 +320,7 @@ class _PastTicketsState extends State<PastTickets> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } // By default show a loading spinner.
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
