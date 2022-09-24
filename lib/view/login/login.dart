@@ -21,10 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController stbController = TextEditingController();
   final _secureStorage = FlutterSecureStorage();
   Future storeUserId() async {
-    await _secureStorage.write(key: "token", value: stbController.text);
+    await _secureStorage.write(key: "user", value: stbController.text);
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     storeUserId();
   }
@@ -234,6 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               });
             }
+            storeUserId();
           },
           child: Container(
             decoration: BoxDecoration(

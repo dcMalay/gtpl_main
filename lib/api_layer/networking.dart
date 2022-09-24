@@ -88,9 +88,11 @@ Future<UserTicket> postTicket(
 
 //function to fetch the ticket data for a perticular user
 Future<List<UserTicket>> fetchTicketData() async {
+  var authUser = await _secureStorage.read(key: 'user');
   var authToken = await _secureStorage.read(key: 'token');
+  print('user ----> ${authUser}');
   final response = await http.get(
-    Uri.parse('${baseUrl}ticket/user_12345'),
+    Uri.parse('${baseUrl}ticket/${authUser}'),
     headers: {
       HttpHeaders.authorizationHeader: authToken!,
       HttpHeaders.contentTypeHeader: 'application/json'
