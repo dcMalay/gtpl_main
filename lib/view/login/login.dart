@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/const/const.dart';
 import 'package:gtpl/provider/login.dart';
 import 'package:gtpl/query/broadband/sent_otp_broadband.dart';
@@ -18,6 +19,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController stbController = TextEditingController();
+  final _secureStorage = FlutterSecureStorage();
+  Future storeUserId() async {
+    await _secureStorage.write(key: "token", value: stbController.text);
+  }
+
+  @override
+  void initState() {
+    storeUserId();
+  }
 
   @override
   Widget build(BuildContext context) {

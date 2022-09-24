@@ -714,6 +714,7 @@ class _HelpState extends State<Help> {
                       setState(() {
                         selectedWidgetMarker = WidgetMarker.issue;
                       });
+                      getOperator('user_12345');
                     },
                     icon: Icon(Icons.arrow_back),
                   ),

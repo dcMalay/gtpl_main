@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/models/get_operator_model.dart';
 import 'package:gtpl/api_layer/models/ticket_model.dart';
@@ -9,8 +10,8 @@ import 'package:http/http.dart' as http;
 final baseUrl = 'http://3.111.229.113:3000/';
 
 final _secureStorage = FlutterSecureStorage();
-
-late final user_id;
+Dio dio = Dio();
+// late final user_id;
 
 //function to getting user token
 Future<Token> getToken(String user_id) async {
@@ -36,8 +37,8 @@ Future<ResultUserDetail> getOperator(String user_id) async {
       <String, String>{"user_id": user_id},
     ),
   );
-  print("User Id${user_id}");
   if (response.statusCode == 201) {
+    print("User Id${user_id}");
     return ResultUserDetail.fromJson(json.decode(response.body));
   } else {
     throw Exception('data loading failed!');
@@ -53,6 +54,15 @@ Future<UserTicket> postTicket(
   String operator_id,
 ) async {
   var authToken = await _secureStorage.read(key: 'token');
+
+  dio.options.headers['content-Type'] = 'application/json';
+  dio.options.headers["authorization"] = "token ${authToken}";
+  dio.post("${baseUrl}newTicket", data: {
+    "user_id": user_id,
+    "description": description,
+    "issue_type": issue_type,
+    "operator_id": operator_id,
+  });
   final http.Response response = await http.post(
     Uri.parse("${baseUrl}newTicket"),
     headers: {
@@ -64,7 +74,7 @@ Future<UserTicket> postTicket(
         "user_id": user_id,
         "description": description,
         "issue_type": issue_type,
-        "operator_id": operator_id
+        "operator_id": operator_id,
       },
     ),
   );
