@@ -6,8 +6,6 @@ import 'package:gtpl/query/global_handler.dart';
 import 'package:gtpl/view/home/components/broadband.dart';
 import 'package:gtpl/view/home/components/ticket.dart';
 import 'package:gtpl/view/login/login.dart';
-import 'package:gtpl/view/quick_pay/quick_pay.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/view/login/login.dart';
 import 'package:gtpl/view/quick_pay/quick_pay.dart';

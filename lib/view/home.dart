@@ -62,9 +62,10 @@ class _HomeState extends State<Home> {
                 index: 2, icon: Icon(MaterialIcons.explore), label: "Explore"),
 
             const ItemValue(
-                index: 3,
-                icon: Icon(MaterialCommunityIcons.account_outline),
-                label: "My Account"),
+              index: 3,
+              icon: Icon(MaterialCommunityIcons.account_outline),
+              label: "My Account",
+            ),
             // BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           ],
         ),

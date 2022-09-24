@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController stbController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
           Text(
             'Welcome Back',
             style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
+              color: Theme.of(context).primaryColor,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
@@ -115,19 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // TextField(
-                    //   controller: phoneController,
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Enter Your phone Number',
-                    //     hintStyle: TextStyle(color: greycolor),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 )
               : Provider.of<LoginProvider>(context, listen: true)
@@ -142,7 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                      ))
+                      ),
+                    )
                   : Container()
         ],
       ),
@@ -242,11 +231,14 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Theme.of(context).primaryColor,
             ),
             child: const Center(
-              child: Text("Request for OTP",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
+              child: Text(
+                "Request for OTP",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),

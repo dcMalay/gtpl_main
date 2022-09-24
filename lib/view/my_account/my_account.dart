@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/query/get_broad_details.dart';
@@ -10,9 +8,7 @@ import 'package:gtpl/view/login/login.dart';
 import 'package:gtpl/view/my_account/sub_screen/manage_plan.dart';
 import 'package:gtpl/view/my_account/sub_screen/my_address.dart';
 import 'package:gtpl/view/my_account/sub_screen/my_devices.dart';
-import 'package:provider/provider.dart';
 
-import '../../provider/home.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
