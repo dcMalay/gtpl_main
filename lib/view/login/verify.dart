@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/const/const.dart';
 import 'package:gtpl/query/broadband/sent_otp.dart';
 import 'package:gtpl/query/const.dart';
@@ -59,6 +60,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+
+    getToken("user_12345");
     super.initState();
   }
 

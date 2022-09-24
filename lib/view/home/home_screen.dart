@@ -18,12 +18,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
-  // GetUserDetailsModel? dsValue;
+
   GetBroadbandDetailsModel? dsBroadband;
+
   @override
   void initState() {
     GlobalHandler.getBroadbandNo().then((value) async {
-      // print(value == null);
       if (value != null) {
         setState(() {
           accountBroadbandNotFound = true;

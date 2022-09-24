@@ -159,9 +159,7 @@ class _PastTicketsState extends State<PastTickets> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          data[index].issueType,
-
-                                          // 'Issue raised:',
+                                          'Issue raised:',
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
@@ -171,7 +169,7 @@ class _PastTicketsState extends State<PastTickets> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '“Payment failed”',
+                                          data[index].issueType,
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,

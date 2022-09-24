@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gtpl/api_layer/models/token_model.dart';
 import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/query/const.dart';
+import 'package:gtpl/query/get_broad_details.dart';
+import 'package:gtpl/query/global_handler.dart';
 import 'package:gtpl/view/help/components/past_ticket.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gtpl/view/login/login.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 enum WidgetMarker {
@@ -77,23 +80,36 @@ class _HelpState extends State<Help> {
   TextEditingController getIssueDesc = TextEditingController();
 
 //function to get the current userID from sharedprefarance
-  var user_id = "user_12345";
+  GetBroadbandDetailsModel? dsBroadband;
+  bool? accountNotFound;
+  bool? accountBroadbandNotFound;
+
   var operator_id = 'op_1234';
 
-  void getBroadband() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString("user_id");
-    setState(() {
-      user_id = token!;
-    });
-  }
+  late Future<Token> data;
 
   @override
   void initState() {
-    getBroadband();
+    GlobalHandler.getBroadbandNo().then((value) async {
+      // print(value == null);
+      if (value != null) {
+        setState(() {
+          accountBroadbandNotFound = true;
+        });
+        var getId = await GlobalHandler.getBroadbandNo();
+        getBroadbandUserDetails(context, getId!).then((value) {
+          setState(() {
+            dsBroadband = value;
+          });
+        });
+      } else {
+        setState(() {
+          accountBroadbandNotFound = false;
+        });
+      }
+      print(dsBroadband);
+    });
 
-    getOperator(user_id);
-    // getoperator=getOperator(user_id);
     super.initState();
   }
 
@@ -111,65 +127,110 @@ class _HelpState extends State<Help> {
       );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(0),
-        children: [
-          Container(
-            child: Column(
-              children: [
-                SizedBox(
-                  //MediaQ ka jo kaam h size ke sth kuch bhi kr skte h jo chahiye more importance for me this mediaQ.
-                  height: MediaQuery.of(context).padding.top + 50,
-                ),
-                Text(
-                  'HELLO',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: whiteColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'How can we help you?',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: whiteColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.elliptical(500, 30),
-                bottomRight: Radius.elliptical(500, 20),
+    return accountBroadbandNotFound == false
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Home',
+                style: TextStyle(color: Colors.black),
               ),
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF003A97),
-                  Color(0xFF3B80CD),
-                  Color(0xFF8CD0FD)
-                ],
+              backgroundColor: Colors.white,
+              centerTitle: true,
+              elevation: 2,
+              leading: BackButton(
+                color: Colors.black,
               ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            child: _buildCustomContainer(),
-          ),
-        ],
-      ),
-    );
+            body: Center(
+                child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(10)),
+                width: 250,
+                height: 50,
+                child: const Center(
+                  child: Text(
+                    'Login Now',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            )))
+        : dsBroadband == null
+            ? Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : Scaffold(
+                body: ListView(
+                  padding: EdgeInsets.all(0),
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            //MediaQ ka jo kaam h size ke sth kuch bhi kr skte h jo chahiye more importance for me this mediaQ.
+                            height: MediaQuery.of(context).padding.top + 50,
+                          ),
+                          Text(
+                            'HELLO',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: whiteColor,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'How can we help you?',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: whiteColor,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.elliptical(500, 30),
+                          bottomRight: Radius.elliptical(500, 20),
+                        ),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF003A97),
+                            Color(0xFF3B80CD),
+                            Color(0xFF8CD0FD),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: _buildCustomContainer(),
+                    ),
+                  ],
+                ),
+              );
   }
 
 //widget controller to control which widget to show+
@@ -243,7 +304,7 @@ class _HelpState extends State<Help> {
                   child: CarouselSlider(
                       carouselController: controller,
                       options: CarouselOptions(
-                        autoPlay: true,
+                        autoPlay: false,
                         autoPlayInterval: const Duration(seconds: 3),
                         autoPlayAnimationDuration:
                             const Duration(milliseconds: 800),
@@ -583,14 +644,14 @@ class _HelpState extends State<Help> {
               ),
               Center(
                 child: Container(
-                  width: 200,
+                  width: 210,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: primaryColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(5)),
                   child: Center(
                     child: Text(
-                      'Subscriber Id: ${user_id}',
+                      'Subsciber Id: ${dsBroadband!.resultUserDetail!.userId}',
                       style: TextStyle(
                         fontSize: 16,
                         color: primaryColor,
@@ -625,7 +686,6 @@ class _HelpState extends State<Help> {
   }
 
 // raised a ticket widget is here
-
   Widget _buildRaiseTicket() {
     //List of items in our dropdown menu
     var issueCategory = [
