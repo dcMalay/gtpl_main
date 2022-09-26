@@ -61,7 +61,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
       ),
     );
 
-    getToken("user_12345");
+    getToken();
     super.initState();
   }
 

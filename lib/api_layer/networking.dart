@@ -11,11 +11,12 @@ final baseUrl = 'http://3.111.229.113:3000/';
 
 final _secureStorage = FlutterSecureStorage();
 Dio dio = Dio();
-// late final user_id;
 
 //function to getting user token
-Future<Token> getToken(String user_id) async {
-  final response = await http.get(Uri.parse('${baseUrl}userlogin/${user_id}'));
+Future<Token> getToken() async {
+  var authUser = await _secureStorage.read(key: 'user');
+  print("user from gettoken---->${authUser}");
+  final response = await http.get(Uri.parse('${baseUrl}userlogin/${authUser}'));
   var jsonResponse = json.decode(response.body);
   await _secureStorage.write(key: "token", value: jsonResponse['token']);
   if (response == 200) {
@@ -27,42 +28,52 @@ Future<Token> getToken(String user_id) async {
 }
 
 //function to get operator_id
-Future<ResultUserDetail> getOperator(String user_id) async {
+Future<ResultUserDetail> getOperator() async {
+  var authUser = await _secureStorage.read(key: 'user');
+  print("user from getoperator---->${authUser}");
+
   final response = await http.post(
     Uri.parse("${baseUrl}broadband/user/details"),
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
     },
     body: jsonEncode(
-      <String, String>{"user_id": user_id},
+      <String, String>{"user_id": authUser!},
     ),
   );
-  if (response.statusCode == 201) {
-    print("User Id${user_id}");
-    return ResultUserDetail.fromJson(json.decode(response.body));
+
+  if (response.statusCode == 200) {
+    var jsonResponse = ResultUserDetail.fromJson(json.decode(response.body));
+    await _secureStorage.write(
+      key: "operator",
+      value: jsonResponse.partnerCode,
+    );
+    //print('Result from getOperator---->${jsonResponse.partnerCode}');
+    return jsonResponse;
   } else {
     throw Exception('data loading failed!');
   }
 }
 
 //function to post ticket issue for broadband
-
 Future<UserTicket> postTicket(
-  String user_id,
   String description,
   String issue_type,
-  String operator_id,
 ) async {
+  var authUser = await _secureStorage.read(key: 'user');
   var authToken = await _secureStorage.read(key: 'token');
-
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["authorization"] = "token ${authToken}";
-  dio.post("${baseUrl}newTicket", data: {
-    "user_id": user_id,
-    "description": description,
-    "issue_type": issue_type,
-    "operator_id": operator_id,
-  });
+  var operatorCode = await _secureStorage.read(key: 'operator');
+  print("Token from postTicket---->${authToken}");
+  print("operator from postTicket---->${operatorCode}");
+  print("user from postTicket---->${authUser}");
+  // dio.options.headers['content-Type'] = 'application/json';
+  // dio.options.headers["authorization"] = "token ${authToken}";
+  // dio.post("${baseUrl}newTicket", data: {
+  //   "user_id": authUser,
+  //   "description": description,
+  //   "issue_type": issue_type,
+  //   "operator_id": operatorCode,
+  // });
   final http.Response response = await http.post(
     Uri.parse("${baseUrl}newTicket"),
     headers: {
@@ -71,10 +82,10 @@ Future<UserTicket> postTicket(
     },
     body: jsonEncode(
       <String, String>{
-        "user_id": user_id,
+        "user_id": authUser!,
         "description": description,
         "issue_type": issue_type,
-        "operator_id": operator_id,
+        "operator_id": operatorCode!,
       },
     ),
   );
@@ -88,9 +99,14 @@ Future<UserTicket> postTicket(
 
 //function to fetch the ticket data for a perticular user
 Future<List<UserTicket>> fetchTicketData() async {
+  var authUser = await _secureStorage.read(key: 'user');
   var authToken = await _secureStorage.read(key: 'token');
+  // var opreator = await _secureStorage.read(key: 'operator');
+  print("user from fetchTicketData---->${authUser}");
+  print("token from fetchTicketData---->${authToken}");
+  // print("operator from fetchTicketData---->${opreator}");
   final response = await http.get(
-    Uri.parse('${baseUrl}ticket/user_12345'),
+    Uri.parse('${baseUrl}ticket/${authUser}'),
     headers: {
       HttpHeaders.authorizationHeader: authToken!,
       HttpHeaders.contentTypeHeader: 'application/json'
