@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/models/get_operator_model.dart';
 import 'package:gtpl/api_layer/models/post_ticket_model.dart';
@@ -11,7 +12,6 @@ import 'package:http/http.dart' as http;
 final baseUrl = 'http://3.111.229.113:3000/';
 
 final _secureStorage = FlutterSecureStorage();
-Dio dio = Dio();
 
 //function to getting user token
 Future<Token> getToken() async {
@@ -60,7 +60,7 @@ Future<GetOperator> getOperator() async {
 }
 
 //function to post ticket issue for broadband
-Future<PostTicket> postTicket(String desc, String issue) async {
+Future<http.Response> postTicket(String desc, String issue) async {
   var authUser = await _secureStorage.read(key: "user");
   var authToken = await _secureStorage.read(key: "token");
   var operatorCode = await _secureStorage.read(key: "operator");
@@ -68,29 +68,30 @@ Future<PostTicket> postTicket(String desc, String issue) async {
   print("operator from postTicket---->${operatorCode}");
   print("user from postTicket---->${authUser}");
 
-  var response = await http.post(
+  return http.post(
     Uri.parse("${baseUrl}newTicket"),
     headers: {
       HttpHeaders.authorizationHeader: authToken!,
       HttpHeaders.contentTypeHeader: "application/json"
     },
     body: jsonEncode(
-      <String, String>{
-        "user_id": authUser!,
+      <String, dynamic>{
+        "user_id": authUser,
         "description": desc,
         "issue_type": issue,
-        "operator_id": operatorCode!,
+        "oparetor_id": operatorCode,
       },
     ),
   );
 
-  if (response.statusCode == 201) {
-    var result = await PostTicket.fromJson(json.decode(response.body));
-    print('result from postticket------>${result}');
-    return result;
-  } else {
-    throw Exception('post ticket action loading failed!---------->');
-  }
+  // if (response.statusCode == 201) {
+  //   var result = await UserTicket.fromJson(json.decode(response.body));
+  //   print('result from postticket------>${result}');
+
+  //   return result;
+  // } else {
+  //   throw Exception('post ticket action loading failed!---------->');
+  // }
 }
 
 //function to fetch the ticket data for a perticular user

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/models/token_model.dart';
 import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/query/const.dart';
@@ -78,15 +79,18 @@ class _HelpState extends State<Help> {
   TextEditingController getSubscriberNo = TextEditingController();
   TextEditingController getStbNo = TextEditingController();
   TextEditingController getIssueDesc = TextEditingController();
+  TextEditingController getIssue = TextEditingController();
 
 //function to get the current userID from sharedprefarance
   GetBroadbandDetailsModel? dsBroadband;
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
 
-  var operator_id = 'op_1234';
-
-  late Future<Token> data;
+  final _secureStorage = FlutterSecureStorage();
+  var userId;
+  void getuser() async {
+    userId = await _secureStorage.read(key: "user");
+  }
 
   @override
   void initState() {
@@ -109,9 +113,10 @@ class _HelpState extends State<Help> {
       }
       print(dsBroadband);
     });
-    postTicket("description", "issue typr");
+    //postTicket("description", "issue type");
     getOperator();
     getToken();
+    getuser();
     super.initState();
   }
 
@@ -701,6 +706,7 @@ class _HelpState extends State<Help> {
     ];
     // Initial Selected Value
     var _dropdownValue;
+
     return Column(
       children: [
         SizedBox(height: 10),
@@ -734,10 +740,11 @@ class _HelpState extends State<Help> {
               ),
               SizedBox(height: 30),
               TextField(
+                enabled: false,
                 controller: getSubscriberNo,
                 decoration: InputDecoration(
                   enabled: true,
-                  hintText: 'Subscriber No.',
+                  hintText: userId,
                   hintStyle: TextStyle(
                     color: Colors.grey,
                   ),
@@ -745,6 +752,13 @@ class _HelpState extends State<Help> {
                 ),
               ),
               SizedBox(height: 30),
+              Text(
+                'Optional Only for Cable',
+                style: TextStyle(
+                  fontSize: 10,
+                ),
+              ),
+              SizedBox(height: 5),
               TextField(
                 controller: getStbNo,
                 decoration: InputDecoration(
@@ -756,27 +770,37 @@ class _HelpState extends State<Help> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.all(5),
-                width: 400,
-                height: 60,
-                child: DropdownButton<String>(
-                  enableFeedback: true,
-                  hint: Text('Choose your Issue'),
-                  isExpanded: true,
-                  value: _dropdownValue,
-                  items: issueCategory
-                      .map((String item) =>
-                          DropdownMenuItem(value: item, child: Text(item)))
-                      .toList(),
-                  onChanged: (String? d) {
-                    setState(() {
-                      _dropdownValue = d!;
-                      // print(_dropdownValue);
-                    });
-                  },
+              TextField(
+                controller: getIssue,
+                decoration: InputDecoration(
+                  hintText: 'Write your Issue Type',
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  border: OutlineInputBorder(),
                 ),
               ),
+              // Container(
+              //   padding: EdgeInsets.all(5),
+              //   width: 400,
+              //   height: 60,
+              //   child: DropdownButton<String>(
+              //     enableFeedback: true,
+              //     hint: Text('Choose your Issue'),
+              //     isExpanded: true,
+              //     value: _dropdownValue,
+              //     items: issueCategory
+              //         .map((String item) =>
+              //             DropdownMenuItem(value: item, child: Text(item)))
+              //         .toList(),
+              //     onChanged: (String? d) {
+              //       setState(() {
+              //         _dropdownValue = d!;
+              //         print(_dropdownValue);
+              //       });
+              //     },
+              //   ),
+              // ),
               SizedBox(height: 20),
               TextField(
                 controller: getIssueDesc,
@@ -795,10 +819,13 @@ class _HelpState extends State<Help> {
         Center(
           child: CupertinoButton(
             color: primaryColor,
-            onPressed: () async {
+            onPressed: () {
               String desc = getIssueDesc.text;
-              String issue = _dropdownValue;
-              postTicket(desc, issue);
+              String issueType = getIssue.text;
+              // print("dropdown value ---->${_dropdownValue}");
+              // print(desc);
+
+              postTicket(desc, issueType);
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
