@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/models/get_operator_model.dart';
+import 'package:gtpl/api_layer/models/post_ticket_model.dart';
 import 'package:gtpl/api_layer/models/ticket_model.dart';
 import 'package:gtpl/api_layer/models/token_model.dart';
 import 'package:http/http.dart' as http;
@@ -28,13 +29,12 @@ Future<Token> getToken() async {
 }
 
 //function to get operator_id
-Future<ResultUserDetail> getOperator() async {
-  var authUser = await _secureStorage.read(key: 'user');
-  print("user from getoperator---->${authUser}");
+Future<GetOperator> getOperator() async {
+  var authUser = await _secureStorage.read(key: "user");
 
-  final response = await http.post(
+  var response = await http.post(
     Uri.parse("${baseUrl}broadband/user/details"),
-    headers: {
+    headers: <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json',
     },
     body: jsonEncode(
@@ -42,13 +42,17 @@ Future<ResultUserDetail> getOperator() async {
     ),
   );
 
+  print("user from getoperator---->${authUser}");
+
   if (response.statusCode == 200) {
-    var jsonResponse = ResultUserDetail.fromJson(json.decode(response.body));
+    var jsonResponse = GetOperator.fromJson(json.decode(response.body));
+
     await _secureStorage.write(
       key: "operator",
-      value: jsonResponse.partnerCode,
+      value: jsonResponse.resultUserDetail.partnerCode,
     );
-    //print('Result from getOperator---->${jsonResponse.partnerCode}');
+    print(
+        'Result from getOperator---->${jsonResponse.resultUserDetail.partnerCode}');
     return jsonResponse;
   } else {
     throw Exception('data loading failed!');
@@ -56,44 +60,36 @@ Future<ResultUserDetail> getOperator() async {
 }
 
 //function to post ticket issue for broadband
-Future<UserTicket> postTicket(
-  String description,
-  String issue_type,
-) async {
-  var authUser = await _secureStorage.read(key: 'user');
-  var authToken = await _secureStorage.read(key: 'token');
-  var operatorCode = await _secureStorage.read(key: 'operator');
+Future<PostTicket> postTicket(String desc, String issue) async {
+  var authUser = await _secureStorage.read(key: "user");
+  var authToken = await _secureStorage.read(key: "token");
+  var operatorCode = await _secureStorage.read(key: "operator");
   print("Token from postTicket---->${authToken}");
   print("operator from postTicket---->${operatorCode}");
   print("user from postTicket---->${authUser}");
-  // dio.options.headers['content-Type'] = 'application/json';
-  // dio.options.headers["authorization"] = "token ${authToken}";
-  // dio.post("${baseUrl}newTicket", data: {
-  //   "user_id": authUser,
-  //   "description": description,
-  //   "issue_type": issue_type,
-  //   "operator_id": operatorCode,
-  // });
-  final http.Response response = await http.post(
+
+  var response = await http.post(
     Uri.parse("${baseUrl}newTicket"),
     headers: {
       HttpHeaders.authorizationHeader: authToken!,
-      HttpHeaders.contentTypeHeader: 'application/json'
+      HttpHeaders.contentTypeHeader: "application/json"
     },
     body: jsonEncode(
       <String, String>{
         "user_id": authUser!,
-        "description": description,
-        "issue_type": issue_type,
+        "description": desc,
+        "issue_type": issue,
         "operator_id": operatorCode!,
       },
     ),
   );
 
   if (response.statusCode == 201) {
-    return UserTicket.fromJson(json.decode(response.body));
+    var result = await PostTicket.fromJson(json.decode(response.body));
+    print('result from postticket------>${result}');
+    return result;
   } else {
-    throw Exception('Data loading failed!');
+    throw Exception('post ticket action loading failed!---------->');
   }
 }
 

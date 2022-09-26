@@ -109,6 +109,7 @@ class _HelpState extends State<Help> {
       }
       print(dsBroadband);
     });
+    postTicket("description", "issue typr");
     getOperator();
     getToken();
     super.initState();
@@ -796,15 +797,8 @@ class _HelpState extends State<Help> {
             color: primaryColor,
             onPressed: () async {
               String desc = getIssueDesc.text;
-
-              try {
-                await postTicket(
-                  desc,
-                  'smart featured',
-                );
-              } catch (e) {
-                print(e);
-              }
+              String issue = _dropdownValue;
+              postTicket(desc, issue);
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
