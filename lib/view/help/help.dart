@@ -81,6 +81,11 @@ class _HelpState extends State<Help> {
   TextEditingController getIssueDesc = TextEditingController();
   TextEditingController getIssue = TextEditingController();
 
+  void clearText() {
+    getIssueDesc.clear();
+    getIssue.clear();
+  }
+
 //function to get the current userID from sharedprefarance
   GetBroadbandDetailsModel? dsBroadband;
   bool? accountNotFound;
@@ -114,6 +119,7 @@ class _HelpState extends State<Help> {
       print(dsBroadband);
     });
     //postTicket("description", "issue type");
+    fetchTicketData();
     getOperator();
     getToken();
     getuser();
@@ -311,7 +317,7 @@ class _HelpState extends State<Help> {
                   child: CarouselSlider(
                       carouselController: controller,
                       options: CarouselOptions(
-                        autoPlay: false,
+                        autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 3),
                         autoPlayAnimationDuration:
                             const Duration(milliseconds: 800),
@@ -755,7 +761,8 @@ class _HelpState extends State<Help> {
               Text(
                 'Optional Only for Cable',
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 12,
+                  color: primaryColor,
                 ),
               ),
               SizedBox(height: 5),
@@ -822,10 +829,11 @@ class _HelpState extends State<Help> {
             onPressed: () {
               String desc = getIssueDesc.text;
               String issueType = getIssue.text;
-              // print("dropdown value ---->${_dropdownValue}");
-              // print(desc);
-
               postTicket(desc, issueType);
+
+              // setState(() {
+              //   selectedWidgetMarker = WidgetMarker.issue;
+              // });
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
@@ -833,11 +841,18 @@ class _HelpState extends State<Help> {
                     height: 100,
                     width: 100,
                     child: Center(
-                      child: Text('You Raised a ticket'),
+                      child: Text(
+                        'Thank You, our team will get back to you within 48 hours',
+                        style: TextStyle(
+                          color: primaryColor,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               );
+              clearText();
+              fetchTicketData();
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),

@@ -129,10 +129,14 @@ class _PastTicketsState extends State<PastTickets> {
                                       title: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text(
+                                          SelectableText(
                                             data[index].id,
                                             style: TextStyle(fontSize: 17),
                                           ),
+                                          // Text(
+                                          //   data[index].id,
+                                          //   style: TextStyle(fontSize: 17),
+                                          // ),
                                           SizedBox(
                                             width: 6,
                                           ),
