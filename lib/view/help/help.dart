@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:gtpl/api_layer/models/token_model.dart';
 import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/query/get_broad_details.dart';
@@ -119,10 +120,15 @@ class _HelpState extends State<Help> {
       print(dsBroadband);
     });
     //postTicket("description", "issue type");
-    fetchTicketData();
+
     getOperator();
     getToken();
     getuser();
+
+    // Timer.periodic(Duration(milliseconds: 250), (timer) {
+    //   fetchTicketData();
+    // });
+
     super.initState();
   }
 
@@ -831,9 +837,9 @@ class _HelpState extends State<Help> {
               String issueType = getIssue.text;
               postTicket(desc, issueType);
 
-              // setState(() {
-              //   selectedWidgetMarker = WidgetMarker.issue;
-              // });
+              setState(() {
+                selectedWidgetMarker = WidgetMarker.issue;
+              });
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
