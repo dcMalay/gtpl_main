@@ -510,7 +510,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.smartfeaturesQuestions;
                             });
-                            fliterQuestions('Cables');
+                            fliterQuestions('Smart Feature');
                           },
                           child: Padding(
                             padding:

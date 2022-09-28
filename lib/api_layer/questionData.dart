@@ -328,5 +328,83 @@ List<Map<String, dynamic>> questions = [
         'Can I Block Channels Or Programs I Don’t Want My Children Viewing?',
     'questionAnswer':
         'Yes, you can block channels or programs using Parental Controls. Press SETTINGS on your Digital Cable remote control and then enter the PIN to change or adjust parental controls. If you have never used parental controls before, the PIN is set to a default number of 4321.'
-  }
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Factory Reset',
+    'questionAnswer':
+        'Chang Hong CISCO 4398 CISCO 8398 CISCO Z360 CISCO Z260 MANUAL 3410 PDS1000 Newland OVT 25160 OVT 27160 OVT 27190 OVT 25190 SKYWORTH 32001 SKYC 7640 SKYWORTH 7300A',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'STB NUMBER',
+    'questionAnswer':
+        'Chang Hong CISCO 8398 GK Newland OVT 27190 OVT 25190 OVT 27160 SKYC 7640 SKYWORTH 3006 SKYWORTH 7300A SKYWORTH 32001 ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Channel Unlock',
+    'questionAnswer':
+        'OVT 27190 OVT 25160 OVT 25190 OVT 27160 CISCO 4398 CISCO 8398 CISCO Z360 MANUAL 3410 ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'YuTube Manual',
+    'questionAnswer': 'OVT',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Parental Lock',
+    'questionAnswer':
+        'SKYWORTH 3006 CISCO 4398 CISCO 8398 CISCO Z360 MANUAL 3410 Newland Novabase OVT 27190 OVT 25160 OVT 25190 OVT 27160 skyC7640 SKYWORTH 7300A CISCO Z260 PDS1000 Chang Hong Novabase Newland SKYWORTH 32001 ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'PIN RESET',
+    'questionAnswer':
+        'CISCO Z260 OVT 27190 OVT 25160 OVT25190 OVT 27160 skyC7640 SKYWORTH 3006 SKYWORTH 7300A ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Recording',
+    'questionAnswer':
+        'CISCO 8398 OVT 27190 OVT 25160 OVT25190 OVT 27160 SKYWORTH 3006 ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Camera Manual',
+    'questionAnswer': 'GK ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Weather Manual',
+    'questionAnswer': 'GK ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'DLNA Mobile Casting',
+    'questionAnswer': 'GK ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': 'Camera Surveillance App',
+    'questionAnswer': 'GK ',
+  },
+  {
+    'categoryId': 06,
+    'categoryName': 'Smart Feature',
+    'questionTitle': ' Wi-Fi Manual',
+    'questionAnswer': 'GK OVT ',
+  },
 ];
