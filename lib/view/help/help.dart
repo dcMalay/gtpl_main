@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/networking.dart';
+import 'package:gtpl/api_layer/questionData.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/query/get_broad_details.dart';
 import 'package:gtpl/query/global_handler.dart';
@@ -82,9 +83,24 @@ class _HelpState extends State<Help> {
   TextEditingController getIssueDesc = TextEditingController();
   TextEditingController getIssue = TextEditingController();
 
+//questions and answers are save in this array
+  List<Map<String, dynamic>> faqData = [];
+
   void clearText() {
     getIssueDesc.clear();
     getIssue.clear();
+  }
+
+//function to get the questions for different category
+  void fliterQuestions(String categoryName) {
+    List<Map<String, dynamic>> result = [];
+    result = questions
+        .where((data) => data['categoryName'].contains(categoryName))
+        .toList();
+
+    setState(() {
+      faqData = result;
+    });
   }
 
 //function to get the current userID from sharedprefarance
@@ -93,6 +109,7 @@ class _HelpState extends State<Help> {
   bool? accountBroadbandNotFound;
 
   final _secureStorage = FlutterSecureStorage();
+
   var userId;
   void getuser() async {
     userId = await _secureStorage.read(key: "user");
@@ -117,6 +134,8 @@ class _HelpState extends State<Help> {
           accountBroadbandNotFound = false;
         });
       }
+      faqData = questions;
+
       print(dsBroadband);
     });
     //postTicket("description", "issue type");
@@ -340,6 +359,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.cableQuestions;
                             });
+                            fliterQuestions('Cables');
                           },
                           child: Column(
                             children: [
@@ -366,6 +386,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.equipmentQuestions;
                             });
+                            fliterQuestions('Equipment');
                           },
                           child: Padding(
                             padding:
@@ -396,6 +417,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.digitalQuestions;
                             });
+                            fliterQuestions('Digital');
                           },
                           child: Padding(
                             padding:
@@ -425,6 +447,7 @@ class _HelpState extends State<Help> {
                             setState(() {
                               selectedWidgetMarker = WidgetMarker.hdtvQuestions;
                             });
+                            fliterQuestions('HDTV');
                           },
                           child: Padding(
                             padding:
@@ -455,6 +478,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.parentalcontrolQuestions;
                             });
+                            fliterQuestions('Parental Control');
                           },
                           child: Padding(
                             padding:
@@ -486,6 +510,7 @@ class _HelpState extends State<Help> {
                               selectedWidgetMarker =
                                   WidgetMarker.smartfeaturesQuestions;
                             });
+                            fliterQuestions('Cables');
                           },
                           child: Padding(
                             padding:
@@ -908,10 +933,11 @@ class _HelpState extends State<Help> {
                 icon: Icon(Icons.arrow_back),
               ),
               SizedBox(
-                width: 120,
+                width: 80,
               ),
               Text(
                 category,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -924,30 +950,33 @@ class _HelpState extends State<Help> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: ExpansionPanelList.radio(
-            children: items
-                .map((item) => ExpansionPanelRadio(
-                    value: item.questionTitle,
+            children: faqData
+                .map(
+                  (item) => ExpansionPanelRadio(
+                    value: item['questionTitle'],
                     canTapOnHeader: true,
                     headerBuilder: (context, isExpanded) => ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              item.questionTitle,
-                              style: TextStyle(
-                                color: primaryColor,
-                              ),
-                            ),
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          item['questionTitle'],
+                          style: TextStyle(
+                            color: primaryColor,
                           ),
                         ),
+                      ),
+                    ),
                     body: Container(
                       padding: EdgeInsets.all(8),
                       child: Text(
-                        item.questionAnswer,
+                        item['questionAnswer'],
                         style: TextStyle(
                           color: blackColor,
                         ),
                       ),
-                    )))
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ),
