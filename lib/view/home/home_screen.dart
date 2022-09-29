@@ -3,6 +3,7 @@ import 'package:gtpl/provider/home.dart';
 import 'package:gtpl/query/const.dart';
 import 'package:gtpl/query/get_broad_details.dart';
 import 'package:gtpl/query/global_handler.dart';
+import 'package:gtpl/view/help/components/past_ticket.dart';
 import 'package:gtpl/view/home/components/broadband.dart';
 import 'package:gtpl/view/home/components/ticket.dart';
 import 'package:gtpl/view/login/login.dart';
@@ -319,27 +320,30 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Your Tickets',
+                              'Your Ticket',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF41444B),
                               ),
                             ),
-                            Text(
-                              'See all',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF41444B),
-                              ),
-                            ),
+                            // Text(
+                            //   'See all',
+                            //   style: TextStyle(
+                            //     fontSize: 16,
+                            //     fontWeight: FontWeight.w600,
+                            //     color: Color(0xFF41444B),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        Ticket()
+                        SizedBox(
+                          height: 140,
+                          child: PastTickets(),
+                        )
                       ],
                     ),
                   ),
