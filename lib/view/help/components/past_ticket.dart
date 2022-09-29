@@ -249,7 +249,63 @@ class _PastTicketsState extends State<PastTickets> {
                                               ),
                                               child: InkWell(
                                                 onTap: () {
-                                                  Navigator.pop(context);
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (ctx) => SizedBox(
+                                                      height: 100,
+                                                      width: 100,
+                                                      child: AlertDialog(
+                                                        title: Text(
+                                                          'Close the Ticket',
+                                                          style: TextStyle(
+                                                            color: primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        content: Text(
+                                                          'Are you want to close the ticket?',
+                                                          style: TextStyle(
+                                                            color: blackColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text(
+                                                              'No',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    primaryColor,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              closeTicket(
+                                                                  data[index]
+                                                                      .id);
+
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text(
+                                                              'Yes',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    primaryColor,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
                                                 },
                                                 child: Text(
                                                   'Close the Ticket',
@@ -279,7 +335,9 @@ class _PastTicketsState extends State<PastTickets> {
                               ),
                             ),
                             Text(
-                              data[index].status,
+                              data[index].isclosed == 0
+                                  ? data[index].status
+                                  : "closed",
                               // 'In-process',
                               style: TextStyle(
                                 fontSize: 14,

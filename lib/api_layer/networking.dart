@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gtpl/api_layer/models/get_operator_model.dart';
-import 'package:gtpl/api_layer/models/post_ticket_model.dart';
 import 'package:gtpl/api_layer/models/ticket_model.dart';
 import 'package:gtpl/api_layer/models/token_model.dart';
 import 'package:http/http.dart' as http;
@@ -117,4 +114,32 @@ Future<List<UserTicket>> fetchTicketData() async {
   }
 }
 
+//function to close ticket
+Future<http.Response> closeTicket(String ticketId) async {
+  var authUser = await _secureStorage.read(key: "user");
+  var authToken = await _secureStorage.read(key: "token");
+  print("Token from postTicket---->${authToken}");
+  print("user from postTicket---->${authUser}");
+  print("tickedID from postTicket---->${ticketId}");
+  return http.post(
+    Uri.parse("${baseUrl}close_ticket/${ticketId}"),
+    headers: {
+      HttpHeaders.authorizationHeader: authToken!,
+      HttpHeaders.contentTypeHeader: "application/json"
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        "user_id": authUser,
+      },
+    ),
+  );
 
+  // if (response.statusCode == 201) {
+  //   var result = await UserTicket.fromJson(json.decode(response.body));
+  //   print('result from postticket------>${result}');
+
+  //   return result;
+  // } else {
+  //   throw Exception('post ticket action loading failed!---------->');
+  // }
+}

@@ -405,6 +405,7 @@ List<Map<String, dynamic>> questions = [
     'categoryId': 06,
     'categoryName': 'Smart Feature',
     'questionTitle': ' Wi-Fi Manual',
-    'questionAnswer': 'GK OVT ',
+    'questionAnswer': ''' a. GK 
+    b.OVT ''',
   },
 ];
