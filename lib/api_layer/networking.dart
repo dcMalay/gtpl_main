@@ -143,3 +143,18 @@ Future<http.Response> closeTicket(String ticketId) async {
   //   throw Exception('post ticket action loading failed!---------->');
   // }
 }
+
+//function to close ticket
+Future<http.Response> giveRating(String ticketId, String rating) async {
+  var authUser = await _secureStorage.read(key: "user");
+  var authToken = await _secureStorage.read(key: "token");
+  var operatorCode = await _secureStorage.read(key: "operator");
+  print("Token from giveRating---->${authToken}");
+  print("user from giveRating---->${authUser}");
+  print("rating from giveRating---->$rating");
+  return http.post(
+    Uri.parse(
+        "${baseUrl}/user/give/star/$authUser/$operatorCode/$rating/$ticketId "),
+    headers: {HttpHeaders.contentTypeHeader: "application/json"},
+  );
+}

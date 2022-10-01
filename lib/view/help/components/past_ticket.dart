@@ -286,47 +286,12 @@ class _PastTicketsState extends State<PastTickets> {
                                                               Navigator.pop(
                                                                   context);
                                                               showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (ctx) =>
-                                                                    SizedBox(
-                                                                  height: 100,
-                                                                  width: 100,
-                                                                  child:
-                                                                      AlertDialog(
-                                                                    title: Text(
-                                                                      'Rate our service',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                        color:
-                                                                            primaryColor,
-                                                                      ),
-                                                                    ),
-                                                                    content:
-                                                                        StarRating(),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        child:
-                                                                            Text(
-                                                                          'Ok',
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                primaryColor,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              );
+                                                                  context:
+                                                                      context,
+                                                                  builder: (ctx) =>
+                                                                      StarRating(
+                                                                          ticketId:
+                                                                              data[index].id));
                                                               setState(() {
                                                                 futureData =
                                                                     fetchTicketData();
@@ -346,7 +311,7 @@ class _PastTicketsState extends State<PastTickets> {
                                                   );
                                                   Future.delayed(
                                                       const Duration(
-                                                        seconds: 5,
+                                                        seconds: 8,
                                                       ), () {
                                                     Navigator.pop(context);
                                                   });
