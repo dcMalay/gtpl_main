@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gtpl/api_layer/networking.dart';
 import 'package:gtpl/api_layer/models/ticket_model.dart';
 import 'package:gtpl/query/const.dart';
+import 'package:gtpl/view/help/components/rating_bar.dart';
 
 class PastTickets extends StatefulWidget {
   const PastTickets({super.key});
@@ -15,15 +16,6 @@ class _PastTicketsState extends State<PastTickets> {
   var isExpanded = false;
 
   late Future<List<UserTicket>> futureData;
-
-  // var user_id;
-  // void getBroadbandNo() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   var token = prefs.getString("user_id");
-  //   setState(() {
-  //     user_id = token;
-  //   });
-  // }
 
   @override
   void initState() {
@@ -293,6 +285,52 @@ class _PastTicketsState extends State<PastTickets> {
 
                                                               Navigator.pop(
                                                                   context);
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (ctx) =>
+                                                                    SizedBox(
+                                                                  height: 100,
+                                                                  width: 100,
+                                                                  child:
+                                                                      AlertDialog(
+                                                                    title: Text(
+                                                                      'Rate our service',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        color:
+                                                                            primaryColor,
+                                                                      ),
+                                                                    ),
+                                                                    content:
+                                                                        StarRating(),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          'Ok',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color:
+                                                                                primaryColor,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                              setState(() {
+                                                                futureData =
+                                                                    fetchTicketData();
+                                                              });
                                                             },
                                                             child: Text(
                                                               'Yes',
@@ -306,6 +344,12 @@ class _PastTicketsState extends State<PastTickets> {
                                                       ),
                                                     ),
                                                   );
+                                                  Future.delayed(
+                                                      const Duration(
+                                                        seconds: 5,
+                                                      ), () {
+                                                    Navigator.pop(context);
+                                                  });
                                                 },
                                                 child: Text(
                                                   'Close the Ticket',
@@ -322,6 +366,7 @@ class _PastTicketsState extends State<PastTickets> {
                                       ],
                                     ),
                                   );
+                                  // Navigator.pop(context);
                                 },
                                 child: Text(
                                   // data[index].description,

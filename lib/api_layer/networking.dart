@@ -13,7 +13,7 @@ final _secureStorage = FlutterSecureStorage();
 //function to getting user token
 Future<Token> getToken() async {
   var authUser = await _secureStorage.read(key: 'user');
-  print("user from gettoken---->${authUser}");
+  // print("user from gettoken---->${authUser}");
   final response = await http.get(Uri.parse('${baseUrl}userlogin/${authUser}'));
   var jsonResponse = json.decode(response.body);
   await _secureStorage.write(key: "token", value: jsonResponse['token']);
@@ -39,7 +39,7 @@ Future<GetOperator> getOperator() async {
     ),
   );
 
-  print("user from getoperator---->${authUser}");
+  // print("user from getoperator---->${authUser}");
 
   if (response.statusCode == 200) {
     var jsonResponse = GetOperator.fromJson(json.decode(response.body));
@@ -48,8 +48,8 @@ Future<GetOperator> getOperator() async {
       key: "operator",
       value: jsonResponse.resultUserDetail.partnerCode,
     );
-    print(
-        'Result from getOperator---->${jsonResponse.resultUserDetail.partnerCode}');
+    // print(
+    //'Result from getOperator---->${jsonResponse.resultUserDetail.partnerCode}');
     return jsonResponse;
   } else {
     throw Exception('data loading failed!');
@@ -61,9 +61,9 @@ Future<http.Response> postTicket(String desc, String issue) async {
   var authUser = await _secureStorage.read(key: "user");
   var authToken = await _secureStorage.read(key: "token");
   var operatorCode = await _secureStorage.read(key: "operator");
-  print("Token from postTicket---->${authToken}");
-  print("operator from postTicket---->${operatorCode}");
-  print("user from postTicket---->${authUser}");
+  // print("Token from postTicket---->${authToken}");
+  // print("operator from postTicket---->${operatorCode}");
+  // print("user from postTicket---->${authUser}");
 
   return http.post(
     Uri.parse("${baseUrl}newTicket"),
