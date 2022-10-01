@@ -352,7 +352,9 @@ class _PastTicketsState extends State<PastTickets> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                color: greenColor,
+                                color: data[index].isclosed == 0
+                                    ? greenColor
+                                    : redColor,
                               ),
                             ),
                           ],

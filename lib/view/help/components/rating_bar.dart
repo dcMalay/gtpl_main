@@ -47,7 +47,7 @@ class _StarRatingState extends State<StarRating> {
           actions: [
             TextButton(
               onPressed: () {
-                giveRating(widget.ticketId, _rating.toString());
+                giveRating(widget.ticketId, _rating.toInt());
                 Navigator.pop(context);
               },
               child: Text(
