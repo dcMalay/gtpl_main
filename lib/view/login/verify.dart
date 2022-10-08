@@ -227,11 +227,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
               color: Theme.of(context).primaryColor,
             ),
             child: const Center(
-              child: Text("Verify now",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
+              child: Text(
+                "Verify now",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
