@@ -326,7 +326,8 @@ class _ManagePlanState extends State<ManagePlan> {
                                     Expanded(
                                       child: Text(
                                           dsBroadband!
-                                              .getSubscriberDetail!.dueDate!,
+                                              .getSubscriberDetail!.dueDate!
+                                          .toString(),
                                           style: TextStyle(
                                               color: blackColor,
                                               fontWeight: FontWeight.w600,
@@ -352,7 +353,8 @@ class _ManagePlanState extends State<ManagePlan> {
                                       child: Text(
                                           DateTime.parse(dsBroadband!
                                                       .resultUserDetail!
-                                                      .expiryDate!)
+                                                      .expiryDate!
+                                                      .toString())
                                                   .difference(DateTime.now())
                                                   .inDays
                                                   .toString() +

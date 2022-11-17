@@ -730,17 +730,17 @@ class _HelpState extends State<Help> {
 // raised a ticket widget is here
   Widget _buildRaiseTicket() {
     //List of items in our dropdown menu
-    var issueCategory = [
-      'Cables',
-      'Equipments',
-      'Digital',
-      'HDTV',
-      'Parental Control',
-      'Smart Featured',
-      'Others',
-    ];
+    // var issueCategory = [
+    //   'Cables',
+    //   'Equipments',
+    //   'Digital',
+    //   'HDTV',
+    //   'Parental Control',
+    //   'Smart Featured',
+    //   'Others',
+    // ];
     // Initial Selected Value
-    var _dropdownValue;
+    //var _dropdownValue;
 
     return Column(
       children: [

@@ -138,7 +138,8 @@ class BroadbandCard extends StatelessWidget {
                             percent: 1,
                             center: Text(
                               DateTime.parse(dsBroadband!
-                                      .resultUserDetail!.expiryDate!)
+                                      .resultUserDetail!.expiryDate!
+                                      .toString())
                                   .difference(DateTime.now())
                                   .inDays
                                   .toString(),
