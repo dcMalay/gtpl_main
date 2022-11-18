@@ -9,7 +9,6 @@ import 'package:gtpl/view/my_account/sub_screen/manage_plan.dart';
 import 'package:gtpl/view/my_account/sub_screen/my_address.dart';
 import 'package:gtpl/view/my_account/sub_screen/my_devices.dart';
 
-
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
 
@@ -21,7 +20,7 @@ class _MyAccountState extends State<MyAccount> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
   GetUserDetailsModel? dsValue;
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {

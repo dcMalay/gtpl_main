@@ -102,7 +102,7 @@ class _HelpState extends State<Help> {
   }
 
 //function to get the current userID from sharedprefarance
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
 

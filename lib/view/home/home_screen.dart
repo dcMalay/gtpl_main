@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
 
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {
@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             dsBroadband = value;
           });
+          print('ds --->${dsBroadband}');
         });
       } else {
         setState(() {
