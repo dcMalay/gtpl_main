@@ -31,12 +31,14 @@ class GlobalHandler {
   static Future<String?> getCustomerNo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("customer_no");
+    print("token form gtpl ----->$token");
     return token;
   }
 
   static Future<String?> getBroadbandNo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("user_id");
+
     return token;
   }
 

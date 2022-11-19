@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gtpl/provider/home.dart';
 import 'package:gtpl/query/const.dart';
-import 'package:gtpl/query/get_broad_details.dart';
 import 'package:gtpl/query/global_handler.dart';
 import 'package:gtpl/view/quick_pay/quick_pay.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class BroadbandCard extends StatelessWidget {
-  final GetBroadbandDetailsModel? dsBroadband;
+  final dynamic dsBroadband;
   const BroadbandCard({Key? key, this.dsBroadband}) : super(key: key);
 
   @override
@@ -138,7 +137,8 @@ class BroadbandCard extends StatelessWidget {
                             percent: 1,
                             center: Text(
                               DateTime.parse(dsBroadband!
-                                      .resultUserDetail!.expiryDate!)
+                                      .resultUserDetail!.expiryDate!
+                                      .toString())
                                   .difference(DateTime.now())
                                   .inDays
                                   .toString(),

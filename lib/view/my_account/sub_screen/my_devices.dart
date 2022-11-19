@@ -589,7 +589,8 @@ class _MyDevicesState extends State<MyDevices> {
                                     Expanded(
                                       child: Text(
                                           dsBroadband!
-                                              .getSubscriberDetail!.dueDate!,
+                                              .getSubscriberDetail!.dueDate!
+                                              .toString(),
                                           style: TextStyle(
                                               color: blackColor,
                                               fontWeight: FontWeight.w600,

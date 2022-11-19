@@ -127,6 +127,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
 
                 return null;
               } else {
+                print('incorrect pin');
                 return 'Pin is incorrect';
               }
             },

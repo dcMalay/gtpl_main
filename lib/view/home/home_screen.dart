@@ -5,7 +5,6 @@ import 'package:gtpl/query/get_broad_details.dart';
 import 'package:gtpl/query/global_handler.dart';
 import 'package:gtpl/view/help/components/past_ticket.dart';
 import 'package:gtpl/view/home/components/broadband.dart';
-import 'package:gtpl/view/home/components/ticket.dart';
 import 'package:gtpl/view/login/login.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
 
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {
@@ -30,17 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
           accountBroadbandNotFound = true;
         });
         var getId = await GlobalHandler.getBroadbandNo();
-        getBroadbandUserDetails(context, getId!).then((value) {
+        print('get - user_id====>$getId');
+        getBroadbandUserDetails(context, getId!).then((value) async {
+          print('getbroadbrand userid --->$getId');
+          print('userid from sharedpreferences value----->$value');
           setState(() {
             dsBroadband = value;
           });
+          print('ds --->${dsBroadband}');
         });
       } else {
         setState(() {
           accountBroadbandNotFound = false;
         });
       }
-      print(dsBroadband);
     });
     super.initState();
   }
@@ -108,16 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  // actions: [
-                  //   IconButton(
-                  //     icon: Icon(Icons.notifications_none),
-                  //     onPressed: () {},
-                  //   ),
-                  //   IconButton(
-                  //     icon: Icon(Icons.search),
-                  //     onPressed: () {},
-                  //   ),
-                  // ],
                   backgroundColor: primaryColor,
                   elevation: 0,
                   title: InkWell(
@@ -148,26 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        // Expanded(
-                        //   child: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('Hii, Priya',
-                        //           style: TextStyle(
-                        //               fontSize: 16,
-                        //               fontWeight: FontWeight.w600,
-                        //               color: Colors.white)),
-                        //       Text(
-                        //         'Subscriber Id:252621',
-                        //         style: TextStyle(
-                        //             fontSize: 12,
-                        //             fontWeight: FontWeight.w400,
-                        //             color: Color(0xFFEFEFEF)),
-                        //       )
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),

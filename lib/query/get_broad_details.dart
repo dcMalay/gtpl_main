@@ -1,16 +1,34 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gtpl/query/global_handler.dart';
-import '../view/error_page.dart';
+import '../api_layer/models/get_broadband_details_model.dart';
 
-Future<GetBroadbandDetailsModel?> getBroadbandUserDetails(
+Future<dynamic> getBroadbandUserDetails(
     BuildContext context, String userid) async {
-  // try {
   var response = await GlobalHandler.requestPost(
       "/broadband/user/details", {"user_id": userid});
   var js = json.decode(response.body);
-  if (js['status'] != 200) {
-    // print();
+  print(js['status']);
+  if (js['status'] == 200) {
+    if (js['get_subscriber_detail']['returnCode'] == 0) {
+      var res = GetBroadbandDetailsModel.fromJson(js);
+      return res;
+    } else {
+      var res = GetBoardbadDetailsModel2.fromJson(js);
+      return res;
+    }
+
+    // if (js is GetBroadbandDetailsModel) {
+    //   return js;
+    // } else if (js is GetBoardbadDetailsModel2) {
+    //   if (js.getSubscriberDetail!.returnCode != "0") {
+    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //       content: Text(js.getSubscriberDetail!.returnMessage!),
+    //     ));
+    //   }
+    //   return js;
+    // }
+  } else if (js['status'] != 200) {
     showDialog(
         context: context,
         builder: (context) {
@@ -27,28 +45,9 @@ Future<GetBroadbandDetailsModel?> getBroadbandUserDetails(
             ],
           );
         });
+  } else {
+    print("getting error");
   }
-
-  if (js['get_subscriber_detail']['returnCode'] != "0") {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(js['get_subscriber_detail']['returnMessage']),
-    ));
-
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return ErrorPage(
-        ds: js['result_user_detail'],
-        title: "Error Code " + js['get_subscriber_detail']['returnCode'],
-        message: js['get_subscriber_detail']['returnMessage'],
-      );
-    }));
-  }
-  GetBroadbandDetailsModel res = GetBroadbandDetailsModel.fromJson(js);
-  return res;
-  // } catch (e) {
-  //   GlobalHandler.snackBar(
-  //       context: context, message: e.toString(), isError: true);
-  //   return null;
-  // }
 }
 
 class GetBroadbandDetailsModel {
