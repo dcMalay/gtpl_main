@@ -15,7 +15,21 @@ Future<dynamic> getBroadbandUserDetails(
       return res;
     } else {
       var res = GetBoardbadDetailsModel2.fromJson(js);
+
       return res;
+      // showDialog(
+      //     context: context,
+      //     builder: (context) => AlertDialog(
+      //           content: Text(js.getSubscriberDetail!.returnMessage!),
+      //           actions: [
+      //             TextButton(
+      //               onPressed: () {
+      //                 Navigator.pop(context);
+      //               },
+      //               child: Text('OK'),
+      //             )
+      //           ],
+      //         ));
     }
 
     // if (js is GetBroadbandDetailsModel) {

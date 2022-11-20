@@ -26,7 +26,7 @@ class _QuickBroadbandState extends State<QuickBroadband> {
   TextEditingController price = TextEditingController();
   TextEditingController mNumber = TextEditingController();
   TextEditingController name = TextEditingController();
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   String? mesage = "";
 
@@ -35,31 +35,11 @@ class _QuickBroadbandState extends State<QuickBroadband> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: ListView(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Subcriber Details", style: TextStyle(color: greyColor)),
           const SizedBox(
             height: 8,
           ),
-          // TextButton(
-          //     onPressed: () async {
-          //       // var value = await renewPlan(
-          //       //     context,
-          //       //     ParamsRenewModel(
-          //       //       mobileNumber: "9088226981",
-          //       //       activityName: "Current Plan",
-          //       //       userId: "demo_gtplkcbpl7",
-          //       //       planName: "BBPS_Test",
-          //       //       amount: "2.00",
-          //       //       description: "renew plan contact number : ",
-          //       //       paymentGatewayName: "CCAvenue",
-          //       //       pGTransId: "58585544554",
-          //       //     ));
-          //       // print(value!.toJson());
-          //       // print();
-          //     },
-          //     child: Text("data")),
           TextField(
             controller: userIdController,
             decoration: InputDecoration(
@@ -72,7 +52,6 @@ class _QuickBroadbandState extends State<QuickBroadband> {
               ),
             ),
           ),
-
           dsBroadband == null
               ? Container()
               : dsBroadband!.status == 200
@@ -197,11 +176,9 @@ class _QuickBroadbandState extends State<QuickBroadband> {
                             style: TextStyle(color: Colors.white)),
                       ),
                     ),
-
           const SizedBox(
             height: 50,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -479,16 +456,6 @@ class _QuickBroadbandState extends State<QuickBroadband> {
               )
             ],
           )
-          // TextField(
-          //   controller: phoneController,
-          //   decoration: InputDecoration(
-          //     hintText: 'Enter Your phone Number',
-          //     hintStyle: TextStyle(color: greycolor),
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(10),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

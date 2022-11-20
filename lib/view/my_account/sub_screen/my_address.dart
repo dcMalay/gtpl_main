@@ -20,7 +20,7 @@ class _MyAddresssState extends State<MyAddresss> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
   GetUserDetailsModel? dsValue;
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {

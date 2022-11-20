@@ -18,8 +18,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
-
   dynamic dsBroadband;
+  
 
   @override
   void initState() {
@@ -36,6 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             dsBroadband = value;
           });
+          if (value.getSubscriberDetail.returnCode != 0) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                content: Text(
+                    'Your current plan is not eligible for online renewal \nRecharge directly done by the user'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  )
+                ],
+              ),
+            );
+          }
+
           print('ds --->${dsBroadband}');
         });
       } else {

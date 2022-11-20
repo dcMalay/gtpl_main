@@ -20,7 +20,7 @@ class _MyDevicesState extends State<MyDevices> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
   GetUserDetailsModel? dsValue;
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {
@@ -462,13 +462,27 @@ class _MyDevicesState extends State<MyDevices> {
                                               fontSize: 12)),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                          dsBroadband!.getSubscriberDetail!
-                                              .subscriberCode!,
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: dsBroadband!.getSubscriberDetail!
+                                                  .subscriberCode ==
+                                              'nocode'
+                                          ? Text(
+                                              dsBroadband!
+                                                  .resultUserDetail!.userId,
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          : Text(
+                                              dsBroadband!.getSubscriberDetail!
+                                                  .subscriberCode!,
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                     ),
                                   ],
                                 ),
@@ -587,14 +601,27 @@ class _MyDevicesState extends State<MyDevices> {
                                               fontSize: 12)),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                          dsBroadband!
-                                              .getSubscriberDetail!.dueDate!
-                                              .toString(),
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: dsBroadband.getSubscriberDetail
+                                                  .returnCode !=
+                                              0
+                                          ? Text(
+                                              '0',
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          : Text(
+                                              dsBroadband!
+                                                  .getSubscriberDetail!.dueDate!
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                     ),
                                   ],
                                 ),
