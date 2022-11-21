@@ -20,7 +20,7 @@ class _ManagePlanState extends State<ManagePlan> {
   bool? accountNotFound;
   bool? accountBroadbandNotFound;
   GetUserDetailsModel? dsValue;
-  GetBroadbandDetailsModel? dsBroadband;
+  dynamic dsBroadband;
 
   @override
   void initState() {
@@ -158,11 +158,14 @@ class _ManagePlanState extends State<ManagePlan> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              Text("Broadband",
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16))
+                              Text(
+                                "Broadband",
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -174,11 +177,14 @@ class _ManagePlanState extends State<ManagePlan> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text("Add Broadband to see your devices",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12)),
+                                    Text(
+                                      "Add Broadband to see your devices",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ],
                                 )
                               : CircularProgressIndicator()
@@ -192,20 +198,37 @@ class _ManagePlanState extends State<ManagePlan> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text("Subscriber Code",
-                                          style: TextStyle(
-                                              color: greyColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: Text(
+                                        "Subscriber Code",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                          dsBroadband!.getSubscriberDetail!
-                                              .subscriberCode!,
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: dsBroadband!.getSubscriberDetail!
+                                                  .subscriberCode ==
+                                              'nocode'
+                                          ? Text(
+                                              dsBroadband!
+                                                  .resultUserDetail!.userId,
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          : Text(
+                                              dsBroadband!.getSubscriberDetail!
+                                                  .subscriberCode!,
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            ),
                                     ),
                                   ],
                                 ),
@@ -217,20 +240,24 @@ class _ManagePlanState extends State<ManagePlan> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text("Status",
-                                          style: TextStyle(
-                                              color: greyColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: Text(
+                                        "Status",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Text(
-                                          dsBroadband!
-                                              .resultUserDetail!.status!,
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                        dsBroadband!.resultUserDetail!.status!,
+                                        style: TextStyle(
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -242,20 +269,25 @@ class _ManagePlanState extends State<ManagePlan> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text("Partner Code",
-                                          style: TextStyle(
-                                              color: greyColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: Text(
+                                        "Partner Code",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Text(
-                                          dsBroadband!
-                                              .resultUserDetail!.partnerCode!,
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                        dsBroadband!
+                                            .resultUserDetail!.partnerCode!,
+                                        style: TextStyle(
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -267,11 +299,14 @@ class _ManagePlanState extends State<ManagePlan> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text("Current Plan",
-                                          style: TextStyle(
-                                              color: greyColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: Text(
+                                        "Current Plan",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Text(
@@ -324,14 +359,25 @@ class _ManagePlanState extends State<ManagePlan> {
                                               fontSize: 12)),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                          dsBroadband!
-                                              .getSubscriberDetail!.dueDate!
-                                          .toString(),
-                                          style: TextStyle(
-                                              color: blackColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12)),
+                                      child: dsBroadband.getSubscriberDetail
+                                                  .returnCode !=
+                                              0
+                                          ? Text(
+                                              '0',
+                                              style: TextStyle(
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          : Text(
+                                              dsBroadband!
+                                                  .getSubscriberDetail!.dueDate!
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: blackColor,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12)),
                                     ),
                                   ],
                                 ),

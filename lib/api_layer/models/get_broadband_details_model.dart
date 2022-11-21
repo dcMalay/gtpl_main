@@ -32,6 +32,7 @@ class GetSubscriberDetail {
     this.returnMessage,
     this.billDate,
     this.subscriberName,
+    this.subscriberCode,
     this.state,
     this.amount,
     this.stateCode,
@@ -43,6 +44,7 @@ class GetSubscriberDetail {
   String? returnMessage;
   Date? billDate;
   String? subscriberName;
+  String? subscriberCode;
   String? amount;
   String? state;
   String? stateCode;
@@ -55,7 +57,8 @@ class GetSubscriberDetail {
         returnMessage: json["returnMessage"],
         billDate: Date.fromJson(json["BillDate"]),
         amount: '0.0',
-        subscriberName: 'Undefine User',
+        subscriberName: 'Undefine',
+        subscriberCode: 'nocode',
         state: json["State"],
         stateCode: json["StateCode"],
       );

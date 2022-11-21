@@ -50,6 +50,7 @@ class _MyAccountState extends State<MyAccount> {
           setState(() {
             dsBroadband = value;
           });
+          print('myaccount screen --->$dsBroadband');
         });
       } else {
         setState(() {
@@ -162,11 +163,22 @@ class _MyAccountState extends State<MyAccount> {
                                                 Icons.person,
                                                 color: Colors.white,
                                               ),
-                                              title: Text(
-                                                '${dsBroadband!.getSubscriberDetail!.subscriberName}',
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
+                                              title: dsBroadband!
+                                                          .getSubscriberDetail!
+                                                          .subscriberName ==
+                                                      'Undefine'
+                                                  ? Text(
+                                                      '${dsBroadband!.resultUserDetail!.userId}',
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      '${dsBroadband!.getSubscriberDetail!.subscriberName}',
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
                                               subtitle: Text(
                                                 dsBroadband!
                                                     .resultUserDetail!.mobileNo
@@ -211,9 +223,11 @@ class _MyAccountState extends State<MyAccount> {
                               ListTile(
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MyDevices()));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyDevices(),
+                                    ),
+                                  );
                                 },
                                 leading: Icon(
                                   Fontisto.tv,
